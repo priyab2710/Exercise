@@ -25,7 +25,12 @@ Steps:
 7. Run command: mvn clean
 8. Run command: mvn compile
 9. Run command: mvn test -Dbrowser=chrome
-10. Test will run
-11. Logs are printed on conso
-12. HTML Results are available in XeroExercise/target/cucumber-html-report/index.html and can be viewed in browser.
-13. Screenshots are available in XeroExercise/Screenshots in case of failure
+10. Logs are printed on console
+11. HTML Results are available in XeroExercise/target/cucumber-html-report/index.html and can be viewed in browser.
+12. Screenshots are available in XeroExercise/Screenshots in case of failure
+
+Screenshots:
+XeroExercise/Screenshots
+
+Reports:
+XeroExercise/target/cucumber-html-report/index.html
