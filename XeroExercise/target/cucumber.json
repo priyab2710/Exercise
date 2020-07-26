@@ -1,0 +1,137 @@
+[
+  {
+    "line": 1,
+    "elements": [
+      {
+        "before": [
+          {
+            "result": {
+              "duration": 8218657900,
+              "status": "passed"
+            },
+            "match": {
+              "location": "StepDefinition.beforeScenario()"
+            }
+          }
+        ],
+        "line": 15,
+        "name": "",
+        "description": "",
+        "id": "add-bank-account;;;2",
+        "after": [
+          {
+            "result": {
+              "duration": 2391591100,
+              "status": "passed"
+            },
+            "match": {
+              "location": "StepDefinition.afterScenario()"
+            }
+          }
+        ],
+        "type": "scenario",
+        "keyword": "Scenario Outline",
+        "steps": [
+          {
+            "result": {
+              "duration": 11190932300,
+              "status": "passed"
+            },
+            "line": 8,
+            "name": "Xero user is logged in with correct \"priyab2710@gmail.com\" and \"Saurabh#7\"",
+            "match": {
+              "arguments": [
+                {
+                  "val": "priyab2710@gmail.com",
+                  "offset": 37
+                },
+                {
+                  "val": "Saurabh#7",
+                  "offset": 64
+                }
+              ],
+              "location": "StepDefinition.xero_user_is_logged_in_with_correct_something_and_something(String,String)"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 10460862000,
+              "status": "passed"
+            },
+            "line": 9,
+            "name": "Xero user has organisation added and selects the existing organization \"Priya Test\"",
+            "match": {
+              "arguments": [
+                {
+                  "val": "Priya Test",
+                  "offset": 72
+                }
+              ],
+              "location": "StepDefinition.xero_user_has_organisation_added_and_selects_the_existing_organization_something(String)"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 2339095000,
+              "status": "passed"
+            },
+            "line": 10,
+            "name": "add bank account options is available to user and is able to click on link for \"Priya Test\" organization",
+            "match": {
+              "arguments": [
+                {
+                  "val": "Priya Test",
+                  "offset": 80
+                }
+              ],
+              "location": "StepDefinition.add_bank_account_options_is_available_to_user_and_is_able_to_click_on_link_for_something_organization(String)"
+            },
+            "keyword": "Then "
+          },
+          {
+            "result": {
+              "duration": 18290723300,
+              "status": "passed"
+            },
+            "line": 11,
+            "name": "user is able to add \"ANZ (NZ)\" bank account with Xero Everyday 01 and Everyday and 01045667789",
+            "match": {
+              "arguments": [
+                {
+                  "val": "ANZ (NZ)",
+                  "offset": 21
+                },
+                {
+                  "val": "Xero Everyday 01",
+                  "offset": 49
+                },
+                {
+                  "val": "Everyday",
+                  "offset": 70
+                },
+                {
+                  "val": "01045667789",
+                  "offset": 83
+                }
+              ],
+              "location": "StepDefinition.user_is_able_to_add_something_bank_account_with_and_and(String,String,String,String)"
+            },
+            "matchedColumns": [
+              0,
+              1,
+              2
+            ],
+            "keyword": "And "
+          }
+        ]
+      }
+    ],
+    "name": "Add bank account",
+    "description": "",
+    "id": "add-bank-account",
+    "keyword": "Feature",
+    "uri": "addBankAccount.feature"
+  }
+]
