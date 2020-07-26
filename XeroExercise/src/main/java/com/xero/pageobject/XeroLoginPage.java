@@ -1,8 +1,11 @@
 package com.xero.pageobject;
 
 
+import java.io.IOException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,7 +13,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.xero.utilities.BaseUtility;
 
-public class XeroLoginPage{
+public class XeroLoginPage extends BaseUtility{
 	public static Logger log=LogManager.getLogger(XeroLoginPage.class.getName());
 
 
@@ -54,43 +57,72 @@ public class XeroLoginPage{
 	private WebElement security_login;
 
 
-	public void loginWithValidCredentials(String useremail,String password) {
+	public void loginWithValidCredentials(String useremail,String password) throws IOException {
 
 		driver.get(LoginURL);
-		email.sendKeys(useremail);
-		password_x.sendKeys(password);
-		Log_in.click();
+		String question1="What was the name of your first pet?";
+		String answer1="niku";
+		String question2="What is the first name of your closest childhood friend?";
+		String answer2="gargi";
+		String question3="What is your dream car?";
+		String answer3="mustangGT";
 
-		select_auth.click();
-		Security_que.click();
-		String firstquestiontext=firstquestion.getText();
-		String secondquestiontext=secondquestion.getText();
-
-
-		if(firstquestiontext.equalsIgnoreCase("What was the name of your first pet?")){
-			firstanswerbox.sendKeys("niku");
-			if(secondquestiontext.equalsIgnoreCase("What is the first name of your closest childhood friend?"))
-				secondanswerbox.sendKeys("gargi");
-			else
-				secondanswerbox.sendKeys("mustangGT");
+		try{
+			log.info("Entering useremail "+useremail);
+			email.sendKeys(useremail);
+			log.info("Entering password XXXXXXX");
+			password_x.sendKeys(password);
+			log.info("Clicking on login button");
+			Log_in.click();
+		}catch(Exception e){
+			log.error("Failed to enter crentials");
+			screenshot(driver,"EnterCredentials");
+			Assert.fail("Failed to enter crentials");
 		}
-		if(firstquestiontext.equalsIgnoreCase("What is the first name of your closest childhood friend?")){
-			firstanswerbox.sendKeys("gargi");
-			if(secondquestiontext.equalsIgnoreCase("What was the name of your first pet?"))
-				secondanswerbox.sendKeys("niku");
-			else
-				secondanswerbox.sendKeys("mustangGT");
-		}
-		if(firstquestiontext.equalsIgnoreCase("What is your dream car?")){
-			firstanswerbox.sendKeys("mustangGT");
-			if(secondquestiontext.equalsIgnoreCase("What was the name of your first pet?"))
-				secondanswerbox.sendKeys("niku");
-			else
-				secondanswerbox.sendKeys("gargi");
 
-		}
-		security_login.click();
+		try{
+			log.info("Clicking on use other authentication method");
+			select_auth.click();
+			log.info("Selecting security questions");
+			Security_que.click();
+			String firstquestiontext=firstquestion.getText();
+			String secondquestiontext=secondquestion.getText();
+			if(firstquestiontext.equalsIgnoreCase(question1)){
+				log.info("Answering first question");
+				firstanswerbox.sendKeys(answer1);
+				log.info("Answering second question");
+				if(secondquestiontext.equalsIgnoreCase(question2))
+					secondanswerbox.sendKeys(answer2);
+				else
+					secondanswerbox.sendKeys(answer3);
+			}
+			if(firstquestiontext.equalsIgnoreCase(question2)){
+				log.info("Answering first question");
+				firstanswerbox.sendKeys(answer2);
+				log.info("Answering second question");
+				if(secondquestiontext.equalsIgnoreCase(question3))
+					secondanswerbox.sendKeys(answer3);
+				else
+					secondanswerbox.sendKeys(answer1);
+			}
 
+			if(firstquestiontext.equalsIgnoreCase(question3)){
+				log.info("Answering first question");
+				firstanswerbox.sendKeys(answer3);
+				log.info("Answering second question");
+				if(secondquestiontext.equalsIgnoreCase(question1))
+					secondanswerbox.sendKeys(answer1);
+				else
+					secondanswerbox.sendKeys(answer2);
+
+			}
+			log.info("Clicking on Login button");
+			security_login.click();
+		}catch(Exception e){
+			log.error("Failed to answer security questions");
+			screenshot(driver,"SecurityQuestion");
+			Assert.fail("Failed to answer security questions");
+		}
 	}
 
 }

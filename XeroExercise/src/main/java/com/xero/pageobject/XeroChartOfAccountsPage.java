@@ -3,6 +3,7 @@ package com.xero.pageobject;
 
 import static org.testng.Assert.fail;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -18,7 +19,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.xero.utilities.BaseUtility;
 
-public class XeroChartOfAccountsPage{
+public class XeroChartOfAccountsPage extends BaseUtility{
 	public static Logger log=LogManager.getLogger(XeroChartOfAccountsPage.class.getName());
 
 
@@ -42,29 +43,24 @@ public class XeroChartOfAccountsPage{
 	@FindBy(xpath="//a[contains(@onclick,'BulkAction.deleteSelectedItems')]")
 	private WebElement deleteButton;
 
-	public void deleteBankAccount(String accountname1) throws InterruptedException {
-
-		log.info(
-				"------------------------------Cleanup Test Data------Deleting bank accounts added-------------------------------------------------------------------");
-
+	public void deleteBankAccount(String accountname1) throws InterruptedException,IOException {
+		System.out.println("---------- Removing bank account for regression ----------");
 		try{
+			log.info("Go of Chart of Account page");
 			driver.get(ChartOfAccoutURL);
-
-
+			log.info("Selecting bank account name "+accountname1);
 			driver.findElement(By.xpath("//tr[td[a[contains(text(),'"+accountname1+"')]]]//input[@id='WillDelete']"))
 					.click();
+			log.info("Clicking on delete button");
 			deleteButton.click();
+			log.info("Clicking on confirm delete button");
 			confirmdelete.click();
+			System.out.println("---------- Cleanup finished ----------");
 		}catch(Exception e){
-			Assert.assertTrue("Account deletion failed",deleteSuccessMessage.isDisplayed());
 			log.error("Account deletion failed");
+			screenshot(driver,"AddBankAccount");
+			Assert.assertTrue("Account deletion failed",deleteSuccessMessage.isDisplayed());
 		}
-
-
-		log.info(
-				"------------------------------Cleanup finished-------------------------------------------------------------------------------------------------------");
-
 	}
-
 }
 

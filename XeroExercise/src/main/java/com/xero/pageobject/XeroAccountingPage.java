@@ -53,7 +53,7 @@ public class XeroAccountingPage extends BaseUtility{
 	@FindBy(xpath="//*[@data-automationid='connectbank-buttonDownloadForm']")
 	private WebElement downloadform;
 
-	@FindBy(xpath="//*[@data-automationid='uploadForm-uploadLaterButton']")
+	@FindBy(xpath="//a[@data-automationid='uploadForm-uploadLaterButton']")
 	private WebElement uploadlater;
 
 	@FindBy(xpath="//*[@data-automationid='uploadForm-uploadFormButton']")
@@ -69,46 +69,56 @@ public class XeroAccountingPage extends BaseUtility{
 			log.info("Selecting bank "+bank);
 			driver.findElement(By.xpath("//*[@data-automationid='popularBanksList']//li[contains(text(),'"+bank+"')]"))
 					.click();
+			log.info("Bank selected "+bank);
 		}catch(Exception e){
 			log.error("Bank selection failed");
 			Assert.fail("Bank selection failed");
-			screenshot("selectBank");
+			screenshot(driver,"BankSelection");
 		}
 	}
 
 	public void addBankAccountDetails(String accountname1,String accounttype1,String accountnumber1)
 			throws InterruptedException,IOException {
-
+		WebDriverWait wait=new WebDriverWait(driver,5);
 		try{
-
 			log.info("Adding "+accounttype1+" account "+accountname1);
 			accountname.sendKeys(accountname1);
 			accounttype.click();
 			driver.findElement(By.xpath("//li[contains(text(),'"+accounttype1+"')]")).click();
 
+			log.info("Entering account number "+accountnumber1);
 			if(accounttype1.equalsIgnoreCase("Credit Card")){
 				creditcardnumber.sendKeys(accountnumber1);
-			}
-
-			else{
+			}else{
 				accountnumber.sendKeys(accountnumber1);
 			}
 
+			log.info("Clicking on continue button");
 			continueButton.click();
 
 			if(!(accounttype1.equalsIgnoreCase("Other"))){
 				((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();",ihaveform);
+
+				log.info("Clicking on I have form button");
+				wait.until(ExpectedConditions.elementToBeClickable(ihaveform));
+				Thread.sleep(2000);
 				ihaveform.click();
+
+				((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();",uploadlater);
+				log.info("Clicking on upload later button");
+				wait.until(ExpectedConditions.elementToBeClickable(uploadlater));
+				Thread.sleep(2000);
 				uploadlater.click();
 
-				WebDriverWait wait=new WebDriverWait(driver,30);
+				log.info("Clicking on go to dashboard button");
 				wait.until(ExpectedConditions.elementToBeClickable(uploadformgotodash));
+				Thread.sleep(2000);
 				uploadformgotodash.click();
 			}
 		}catch(Exception e){
 			log.error("Add Bank account details failed");
+			screenshot(driver,"AddBankAccountDetails");
 			Assert.fail("Add Bank account details failed");
-			screenshot("addBankAccountDetails");
 		}
 	}
 
@@ -116,30 +126,33 @@ public class XeroAccountingPage extends BaseUtility{
 	public void verifyBankAccountDetailsOnBankAccountsPage(String accountname1,String accounttype1,
 			String accountnumber1) throws IOException {
 
-		System.out.println("Verify if account is added with correct details on bank accounts page");
+		log.info("Go to Bank Account page");
 		driver.get("https://go.xero.com/Bank/BankAccounts.aspx");
+
 		try{
+			log.info("Verify bank account name is added");
 			if(driver.findElement(By.xpath("//a[contains(text(),'"+accountname1+"')]")).isDisplayed()){
-				System.out.println("Account "+accountname1+" is added successfully");
+				log.info("Account "+accountname1+" is added successfully");
+
+				log.info("Verify bank account number is added");
 				if(driver.findElement(By
 						.xpath("//a[contains(text(),'"+accountname1+"')]//span[contains(text(),'"+accountnumber1+"')]"))
 						.isDisplayed()){
-					System.out.println("account number "+accountnumber1+" is added successfully");
-
-
+					log.info("Account number "+accountnumber1+" is added successfully");
+					screenshot(driver,"BankAccountAdded "+accountname1);
 				}else{
-					// System.out.println("account number "+accountnumber1+" is not added successfully");
-					Assert.fail("account number "+accountnumber1+" is not added");
+					screenshot(driver,"VerifyBankAccountDetails"+accountname1);
+					Assert.fail("Account number "+accountnumber1+" is not added");
 				}
-
 			}else{
+				screenshot(driver,"VerifyBankAccountDetails"+accountname1);
 				Assert.fail("Account is not found");
-
 			}
 		}catch(Exception e){
-			log.error("Bank account is not created");
-			Assert.fail("Bank account is not created");
-			screenshot("verifyBankAccountDetailsOnBankAccountsPage");
+			log.error("Bank account is not added.");
+			screenshot(driver,"VerifyBankAccountDetails"+accountname1);
+			Assert.fail("Bank account is not created.");
+
 		}
 	}
 }

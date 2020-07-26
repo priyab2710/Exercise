@@ -1,0 +1,7 @@
+com\xero\pageobject\XeroAccountingPage.class
+com\xero\utilities\BaseUtility.class
+com\xero\pageobject\XeroDashboard.class
+com\xero\pageobject\XeroChartOfAccountsPage.class
+com\xero\pageobject\XeroLoginPage.class
+com\xero\utilities\ReadProperties.class
+com\xero\pageobject\XeroHomePage.class

@@ -1,0 +1,3 @@
+com\xero\cucumberOptions\testNGRunner.class
+com\xero\cucumberOptions\testRunner.class
+com\xero\stepDefinition\StepDefinition.class

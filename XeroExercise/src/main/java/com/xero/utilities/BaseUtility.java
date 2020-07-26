@@ -25,29 +25,17 @@ public class BaseUtility{
 	public WebDriver driver;
 
 	public WebDriver initializeDriver() throws IOException,InterruptedException {
-		String browsername;
-
 		try{
-			// System.out.println("maven command "+System.getProperty("browser"));
-			browsername=System.getProperty("browser");
-			if(browsername.contains("chrome")){
-				System.out.println("----------Starting browser----------");
+			System.out.println("----------Starting browser----------");
+			if(System.getProperty("browser").contains("chrome")){
+				log.info("Browser: Chrome");
 				System.setProperty("webdriver.chrome.driver",
 						System.getProperty("user.dir")+"\\resources\\chromedriver.exe");
 
-				ChromeOptions co=new ChromeOptions();
-				if(browsername.contains("headless")){
-					co.addArguments("headless");
-
-				}
-				driver=new ChromeDriver(co);
+				driver=new ChromeDriver();
 				driver.manage().window().maximize();
-
 			}
-
 			driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
-
-
 		}catch(Exception e){
 			log.error("Incorrect command. Please run command: mvn test -Dbrowser=chrome");
 			Assert.fail("Incorrect command. Please run command: mvn test -Dbrowser=chrome");
@@ -56,7 +44,7 @@ public class BaseUtility{
 		return driver;
 	}
 
-	public void screenshot(String name) throws IOException {
+	public void screenshot(WebDriver driver,String name) throws IOException {
 		File src=((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 		FileUtils.copyFile(src,new File(System.getProperty("user.dir")+"\\Screenshots\\"+name+"_screenshot.png"));
 	}

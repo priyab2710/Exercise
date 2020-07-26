@@ -26,7 +26,9 @@ public class StepDefinition{
 	@Before
 	public void beforeScenario() throws IOException,InterruptedException {
 		driver=BU.initializeDriver();
+		System.out.println("---------- Test started ----------");
 	}
+
 	@After
 	public void afterScenario() throws IOException {
 		BU.TearDown(driver);
@@ -59,9 +61,7 @@ public class StepDefinition{
 		xdb.selectAddBankAccount();
 		Thread.sleep(2000);
 		Assert.assertEquals(driver.getTitle(),"Xero | Find your bank | "+org,"Pass");
-
 	}
-
 
 	@And("^user is able to add \"([^\"]*)\" bank account with (.+) and (.+) and (.+)$")
 	public void user_is_able_to_add_something_bank_account_with_and_and(String bank,String accountname,
@@ -72,7 +72,5 @@ public class StepDefinition{
 		xap.verifyBankAccountDetailsOnBankAccountsPage(accountname,accounttype,accountnumber);
 		XeroChartOfAccountsPage xcap=new XeroChartOfAccountsPage(driver);
 		xcap.deleteBankAccount(accountname);
-		// BU.TearDown(driver);
-
 	}
 }
