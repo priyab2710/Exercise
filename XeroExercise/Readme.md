@@ -1,9 +1,9 @@
 Exercise
 
-This Automation Framework is designed using Selenium Webdriver with Java programming language, page object model and uses cucumber for BDD.
-The project is built using Maven and only set to run on chrome currently but can be customized to add other browsers.
-This code assumes that a valid user with correct credentials logs in to an account where organization is already present.
-The User selects an already existing organization and clicks on Connect to your bank account to add a bank.
+This Automation Framework is designed using Selenium Webdriver with Java programming language, page object model, and uses cucumber for BDD.
+The project is built using Maven and only set to run on chrome currently but can be customized to add other browsers. Also it uses log4j for logging and cucumber html for reporting.
+This code tests adding bank accounts functionality for user with correct credentials to their existing organization.
+The User selects an already existing organization and clicks on Connect to your bank account to add different bank account types.
 Once all required details are filled, the bank account is successfully created, the code verifies if the given account is added with correct details and takes the screenshot.
 Then the added account is deleted at the end of the test to reuse the test data.
 
